@@ -1,14 +1,33 @@
+use bevy::asset::AssetMetaCheck;
 use bevy::prelude::*;
 
-mod framework;
+use bevy::math::bounding::Aabb2d;
+use bevy::math::vec2;
+
+
+mod utils;
+use crate::utils::check_collision;
+
+pub mod framework;
 use framework::FrameworkPlugin;
+
+pub mod player;
+use player::PlayerPlugin;
+
+mod tilemap;
+use tilemap::TileMapPlugin;
+
 use bevy::window::{PresentMode, WindowResolution};
 use bevy::input::common_conditions::input_toggle_active;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 fn main() {
+    
     App::new()
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
+    .insert_resource(AssetMetaCheck::Never)
+        .add_plugins(
+            DefaultPlugins.set(
+            (WindowPlugin {
             primary_window: Option::Some(Window {
                 title: "Bevy Rust Experiments".to_string(),
                 resizable: true,
@@ -17,11 +36,13 @@ fn main() {
                 ..default()
             }),
             ..default()
-        }))
+        })
+    ))
+
         .add_plugins(
             WorldInspectorPlugin::default().run_if(input_toggle_active(true, KeyCode::Escape)),
         )
         // .add_plugins((PlayerPlugin, WorldPlugin))
-        .add_plugins(FrameworkPlugin)
+        .add_plugins((FrameworkPlugin, TileMapPlugin, PlayerPlugin))
         .run()
 }

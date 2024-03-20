@@ -8,3 +8,8 @@ edition = "2021"
 [dependencies]
 bevy = "0.13.0"
 bevy-inspector-egui = "0.23.2"
+convert-js = "1.0.0-alpha.15"
+dynfmt = {version="0.1.5", features = ["curly"]}
+ron = "0.8.1"
+serde = "1.0.197"
+web-sys = {version="*", features = ["console"]}
