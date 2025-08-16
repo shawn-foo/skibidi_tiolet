@@ -1,1 +1,1 @@
-Rust game.
+reust game
